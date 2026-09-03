@@ -40,9 +40,20 @@ NANO neurologic exam does not, Karnofsky performance status does not, and a
 quality-of-life questionnaire's cognitive subscale does not.
 
 A TF-IDF + LASSO baseline in R posts AUROC 0.971 and adds **zero lift** over a
-naive keyword rule across all four cancer types. Fine-tuned Bio_ClinicalBERT
-beats the baseline **only for CNS**, where the vocabulary is heterogeneous, and
-not at all for the other three. Both negative results are the point.
+naive keyword rule. A fine-tuned Bio_ClinicalBERT appeared to beat that rule for
+CNS — the one cancer type where the vocabulary is heterogeneous.
+
+Then I checked the input. The outcome text I had trained on was truncated at a
+median of 400 characters against ~1,760 in the registry, and for most positive
+trials it no longer contained the instrument. The test is the 113 trials I had
+labelled positive that keyword flagging missed — the ones that made the task look
+hard. On the truncated text the keyword rule recovers **1 of 113**. On complete
+registry text, the same unchanged list recovers **113 of 113**, and neither model
+improves on it: the deployed BERT gets 72% recall on CNS where the rule gets 100%.
+
+The transformer was solving a problem my own text pipeline had created. That
+correction is written into the repository against the original claim rather than
+edited out of it.
 
 ### [cognitive-outcome-classifier-api](https://github.com/Mubashir-zz/cognitive-outcome-classifier-api) · Python
 
