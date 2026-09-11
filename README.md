@@ -8,6 +8,37 @@ often do they actually measure what happens to it?**
 
 ---
 
+### [ctgov-functional-outcomes](https://github.com/Mubashir-zz/ctgov-functional-outcomes) · Python
+
+Registration is where a trial declares what it intends to measure. Across 93,371
+outcome-bearing ClinicalTrials.gov cancer records and 14 functional domains, this asks
+whether the outcome matching a drug's best-documented toxicity is among them. The
+anchor is cisplatin, which causes permanent hearing loss in a large share of the
+patients who receive it.
+
+Of 2,189 modern therapeutic cisplatin trials, **27** register a hearing outcome.
+1.72% after direct standardisation for cancer site, phase and era, against 0.15% in
+matched comparator strata — rate ratio **11.88 (95% CI 6.34–21.92)**. Corrected for
+classification error the corpus-wide rate is **0.12% (0.06–0.17)** against an observed
+0.21%. Relative enrichment and an absolute rate under 2% are both true at once.
+
+The ground truth is 7,966 paired domain labels from two independent clinician passes,
+97.21% raw agreement, all 222 disagreements resolved by documented human adjudication.
+No model output enters it.
+
+Accuracy uncertainty comes from a cluster bootstrap of the validation design rather
+than independent Beta approximations per cell — sensitivity and specificity are drawn
+from the same resample, so their dependence survives, and prevalence stays inside
+[0,1] by construction instead of hitting the boundary the Rogan–Gladen plug-in
+produces. Rate ratios use BCa intervals; switching from percentile intervals moved
+two secondary pairs across the null, which is reported rather than smoothed.
+
+One arm is deliberately unweighted. The enrichment sample drew 40 records from a
+stratum of 71 for hearing, but which records belonged to which stratum lived only in a
+sampling key that no longer exists. Assigning those records a probability from the
+wider frame is wrong by three orders of magnitude, so they carry no weight and are
+reported as an unweighted audit of the predicted-negative space instead.
+
 ### [glioma-nco-registry-study](https://github.com/Mubashir-zz/glioma-nco-registry-study) · R
 
 Cross-sectional registry analysis of 289 randomized glioblastoma and high-grade
