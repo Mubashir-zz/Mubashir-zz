@@ -1,7 +1,6 @@
 ## Mubashir Ahmad Khan
 
-MBBS. Clinical research in neuro-oncology, moving toward computational methods —
-MS in Clinical & Epidemiological Research at UCSF, starting Fall 2026.
+MBBS. Clinical research in neuro-oncology, moving toward computational methods.
 
 The work here follows one question: **oncology trials treat the brain, so how
 often do they actually measure what happens to it?**
