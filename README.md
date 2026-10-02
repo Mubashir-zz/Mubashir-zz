@@ -1,107 +1,42 @@
-## Mubashir Ahmad Khan
+# Mubashir Ahmad Khan, MBBS
 
-MBBS. Clinical research in neuro-oncology, moving toward computational methods.
+Clinical researcher working at the intersection of neuroscience, clinical outcomes research, and biomedical informatics. I completed my medical degree at Zhengzhou University in 2025. My work uses clinical and trial-registry data to study how neurological and functional outcomes are defined, measured, and sometimes lost in research pipelines.
 
-The work here follows one question: **oncology trials treat the brain, so how
-often do they actually measure what happens to it?**
+My current interests include cognitive and functional recovery after brain injury and disease, neuroinflammation and blood-brain barrier injury after stroke, hippocampal memory, clinical outcome measurement, and reproducible analysis in R and Python.
 
----
+## Research
 
-### [ctgov-functional-outcomes](https://github.com/Mubashir-zz/ctgov-functional-outcomes) · Python
+### [Objective neurocognitive endpoints in randomized glioma trials](https://github.com/Mubashir-zz/glioma-nco-registry-study)
 
-Registration is where a trial declares what it intends to measure. Across 93,371
-outcome-bearing ClinicalTrials.gov cancer records and 14 functional domains, this asks
-whether the outcome matching a drug's best-documented toxicity is among them. The
-anchor is cisplatin, which causes permanent hearing loss in a large share of the
-patients who receive it.
+First-author registry study of 289 randomized phase II-III glioblastoma and high-grade glioma trials. I led the protocol development, trial reconciliation, screening, endpoint adjudication, R analysis, and preparation of the reproducible research files. The analysis uses paired within-trial outcome comparisons and Firth penalized regression to handle sparse strata and separation. The manuscript is under review at *Supportive Care in Cancer*.
 
-Of 2,189 modern therapeutic cisplatin trials, **27** register a hearing outcome.
-1.72% after direct standardisation for cancer site, phase and era, against 0.15% in
-matched comparator strata — rate ratio **11.88 (95% CI 6.34–21.92)**. Corrected for
-classification error the corpus-wide rate is **0.12% (0.06–0.17)** against an observed
-0.21%. Relative enrichment and an absolute rate under 2% are both true at once.
+### [Neurocognitive outcome ascertainment in oncology trials](https://github.com/Mubashir-zz/neurocognitive-outcome-classifier)
 
-The ground truth is 7,966 paired domain labels from two independent clinician passes,
-97.21% raw agreement, all 222 disagreements resolved by documented human adjudication.
-No model output enters it.
+A human-adjudicated reference set of 1,888 oncology trials, including 1,804 records used for classifier development and stratified evaluation. I compared a deterministic rule, TF-IDF with LASSO, and Bio_ClinicalBERT. The central result was methodological: an apparent advantage of contextual modeling arose because the stored registry text was truncated. Restoring complete outcome text changed the conclusion and showed why input provenance must be audited before model performance is interpreted.
 
-Accuracy uncertainty comes from a cluster bootstrap of the validation design rather
-than independent Beta approximations per cell — sensitivity and specificity are drawn
-from the same resample, so their dependence survives, and prevalence stays inside
-[0,1] by construction instead of hitting the boundary the Rogan–Gladen plug-in
-produces. Rate ratios use BCa intervals; switching from percentile intervals moved
-two secondary pairs across the null, which is reported rather than smoothed.
+### [Neurocognitive outcome classifier API](https://github.com/Mubashir-zz/cognitive-outcome-classifier-api)
 
-One arm is deliberately unweighted. The enrichment sample drew 40 records from a
-stratum of 71 for hearing, but which records belonged to which stratum lived only in a
-sampling key that no longer exists. Assigning those records a probability from the
-wider frame is wrong by three orders of magnitude, so they carry no weight and are
-reported as an unweighted audit of the predicted-negative space instead.
+A FastAPI and Docker serving implementation with explicit uncertainty flags, automated decision-logic tests, and a model card documenting known errors. The public v1 endpoint preserves the original hybrid routing for reproducibility, but its CNS BERT route is now treated as legacy because complete-text validation favored the deterministic rule. A corrected, versioned routing decision is required before this system should be used beyond research screening.
 
-### [glioma-nco-registry-study](https://github.com/Mubashir-zz/glioma-nco-registry-study) · R
+### [Functional-outcome registration in oncology trials](https://github.com/Mubashir-zz/ctgov-functional-outcomes)
 
-Cross-sectional registry analysis of 289 randomized glioblastoma and high-grade
-glioma trials from ClinicalTrials.gov, ISRCTN, EU-CTR and the WHO ICTRP
-registries.
+Reproducible analysis of 93,371 outcome-bearing ClinicalTrials.gov cancer records across 14 functional domains. The project combines deterministic extraction, a human reference standard, design weights, misclassification correction, direct standardization, cluster bootstrap uncertainty, and BCa intervals. Its purpose is to distinguish relative enrichment from adequate absolute measurement rather than treating either as sufficient alone.
 
-Objective neurocognitive outcomes appear in **13.5%** of trials. Health-related
-quality of life appears in **37.2%**. Paired discordance is 70 trials measuring
-HRQoL alone against 4 measuring cognition alone (McNemar P<.001). Academic and
-cooperative-group sponsors register cognition at roughly three times the
-industry rate.
+## Research background
 
-Firth penalized logistic regression rather than ordinary maximum likelihood,
-because the international-registry term separates completely at 0/14 events and
-ordinary GLM returns an odds ratio of 0.000 with an infinite interval. Bootstrap
-optimism correction, E-values, and a sponsor-by-domain interaction test that
-comes back at P=.389 — reported, because it limits the claim.
+- MBBS, Zhengzhou University, 2025.
+- Neurosurgical clinical and laboratory research training at the First Affiliated Hospital of Zhengzhou University, including a Chiari I outcomes study and assisting work in a rodent intracerebral hemorrhage laboratory.
+- Clinical internship at Henan Provincial People's Hospital of Zhengzhou University.
+- Two peer-reviewed articles, one book chapter in neurointerventional history, and a conference poster on outcomes after Chiari decompression.
+- Current protocol collaboration on retrospective peripheral-nerve recovery studies.
 
-Every table and figure regenerates from one script; the run asserts cohort size
-and event count before it estimates anything. Manuscript under revision for the
-Journal of Neuro-Oncology.
+## Methods
 
-### [neurocognitive-outcome-classifier](https://github.com/Mubashir-zz/neurocognitive-outcome-classifier) · R + Python
+**R:** tidyverse, readxl, logistf, glmnet, ggplot2, boot; registry reconciliation, endpoint adjudication, Wilson intervals, McNemar tests, bootstrap estimation, penalized regression, and reproducible figures.
 
-The same question at registry scale, across CNS, breast, lung and head & neck.
+**Python:** pandas, NumPy, scikit-learn, PyTorch, Transformers, FastAPI, automated testing, GitHub Actions, Docker, model cards, codebooks, and provenance records.
 
-1,888 trials hand-labelled one at a time rather than keyword-matched, because
-the distinctions that matter are not lexical: a cognitive instrument counts, the
-NANO neurologic exam does not, Karnofsky performance status does not, and a
-quality-of-life questionnaire's cognitive subscale does not.
+## Contact
 
-A TF-IDF + LASSO baseline in R posts AUROC 0.971 and adds **zero lift** over a
-naive keyword rule. A fine-tuned Bio_ClinicalBERT appeared to beat that rule for
-CNS — the one cancer type where the vocabulary is heterogeneous.
-
-Then I checked the input. The outcome text I had trained on was truncated at a
-median of 400 characters against ~1,760 in the registry, and for most positive
-trials it no longer contained the instrument. The test is the 113 trials I had
-labelled positive that keyword flagging missed — the ones that made the task look
-hard. On the truncated text the keyword rule recovers **1 of 113**. On complete
-registry text, the same unchanged list recovers **113 of 113**, and neither model
-improves on it: the deployed BERT gets 72% recall on CNS where the rule gets 100%.
-
-The transformer was solving a problem my own text pipeline had created. That
-correction is written into the repository against the original claim rather than
-edited out of it.
-
-### [cognitive-outcome-classifier-api](https://github.com/Mubashir-zz/cognitive-outcome-classifier-api) · Python
-
-The classifier deployed and serving — hybrid routing, BERT for CNS and the
-keyword rule elsewhere, because that is what the evidence supported.
-
-[Live](https://cognitive-outcome-classifier-api.onrender.com/about) · FastAPI,
-Docker, tests in CI. The model is int8-quantized to 169MB from 433MB to survive
-a 512MB instance, and batches are capped at 3 after larger ones were
-out-of-memory killed in production.
-
-Every prediction carries a review flag. Text matching a documented failure
-pattern is flagged even when the model is confident, because on those categories
-confidence carries no information.
-
----
-
-**Tools** — R (tidyverse, glmnet, logistf, ggplot2) · Python (PyTorch,
-transformers, FastAPI, pandas) · Docker · registry APIs
-
-khanmubashirahmad@gmail.com
+- [ORCID 0009-0003-9842-4513](https://orcid.org/0009-0003-9842-4513)
+- [khanmubashirahmad@gmail.com](mailto:khanmubashirahmad@gmail.com)
